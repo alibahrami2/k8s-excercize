@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+
+spec:
+  strategy:
+    type: RollingUpdate 
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: web
+        image: docker.arvancloud.ir/nginx:1.21-alpine
+        ports:
+        - containerPort: 80
